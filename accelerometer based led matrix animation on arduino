@@ -1,0 +1,165 @@
+byte imageone[]={B10000,
+                 B10000,
+                 B10000,
+                 B10000,
+                 B10000};
+byte imagetwo[]={B11100,
+                 B11100,
+                 B11100,
+                 B11100,
+                 B11100};
+byte imagethree[]={B11111,
+                   B11111,
+                   B11111,
+                   B11111,
+                   B11111};
+byte imagefour[]={ B00111,
+                   B00111,
+                   B00111,
+                   B00111,
+                   B00111};
+byte imagefive[]={ B00001,
+                   B00001,
+                   B00001,
+                   B00001,
+                   B00001};
+/*byte imagesix[]={ B00000,
+                   B00000,
+                   B00000,
+                   B00000,
+                   B11111};
+ byte imageseven[]={ B00000,
+                   B00000,
+                   B11111,
+                   B11111,
+                   B11111};
+ byte imageeight[]={ B11111,
+                   B11111,
+                   B11111,
+                   B11111,
+                   B11111};
+byte imagenine[]={ B11111,
+                   B11111,
+                   B11111,
+                   B00000,
+                   B00000};
+byte imageten[]={ B11111,
+                   B00000,
+                   B00000,
+                   B00000,
+                   B00000};
+/*byte imagesix[]={B10011,
+                   B10100,
+                   B11000,
+                   B10100,
+                   B10011};*/
+                 
+const int rowpins[]={0,1,2,3,4};
+const int columnpins[]={9,8,7,6,5};
+int x;
+int y;
+void setup()
+{
+  //Serial.begin(9600);
+  for(int i=0;i<5;i++)
+  {
+    pinMode(rowpins[i],OUTPUT);
+    pinMode(columnpins[i],OUTPUT);
+    digitalWrite(columnpins[i],HIGH);
+  }
+}           
+void loop()
+{
+  /*show(imageone,200);
+  delay(100);
+   show(imagetwo,200);
+  delay(100);
+  show(imagethree,200);
+  delay(100);
+  show(imagefour,200);
+  delay(100);
+  show(imagefive,200);
+  delay(100);
+  show(imagesix,200);
+  delay(100);
+*/
+x=analogRead(A3);
+y=analogRead(A2);
+if(x>469&&x<492)
+{
+  show(imagefive,100);
+  //delay(100);
+}
+else if(x>492&&x<515)
+{
+  show(imagefour,100);
+  //delay(100);
+}
+else if(x>515&&x<538)
+{
+  show(imagethree,100);
+  //delay(100);
+}
+else if(x>538&&x<561)
+{
+  show(imagetwo,100);
+  //delay(100);
+}
+else if(x>561&&x<584)
+{
+  show(imageone,100);
+  //delay(100);
+}
+/*if(y>466&&y<490)
+{
+  show(imagesix,100);
+  //delay(100);
+}
+else if(y>490&&y<514)
+{
+  show(imageseven,100);
+  //delay(100);
+}
+else if(y>514&&y<538)
+{
+  show(imageeight,100);
+  //delay(100);
+}
+else if(y>538&&y<562)
+{
+  show(imagenine,100);
+  //delay(100);
+}
+else if(y>562&&y<586)
+{
+  show(imageten,100);
+  //delay(100);
+}*/
+}
+
+
+void show(byte *image,unsigned long duration)
+{
+  unsigned long start = millis();
+  while(start+duration>millis())
+  {
+    for(int row=0;row<5;row++)
+    {
+      digitalWrite(rowpins[row],HIGH);
+    
+    for(int column=0;column<5;column++)
+    {
+      boolean pixel =bitRead(image[row],column);
+      if(pixel==1)
+      {
+        digitalWrite(columnpins[column],LOW);
+      }
+      delayMicroseconds(300);
+       digitalWrite(columnpins[column],HIGH);
+    }
+        digitalWrite(rowpins[row],LOW);
+        }
+  }
+}
+    
+  
